@@ -1,6 +1,7 @@
-//: [Previous](@previous)
 
 import Foundation
+
+print("Day 1\n")
 
 """
 --- Day 1: The Tyranny of the Rocket Equation ---
@@ -31,9 +32,11 @@ guard let filePath = Bundle.main.path(forResource:"input", ofType: "txt"),
     fatalError("Unable to load input file")
 }
 
-let input = fileContent
+let challengeInput = fileContent
     .components(separatedBy: "\n")
     .compactMap { Int($0) }
+
+print("Part 1\n")
 
 func fuelRequired(forMass mass: Int) -> Int {
     mass / 3 - 2
@@ -49,16 +52,17 @@ let testCasesPart1 = [
 testCasesPart1.forEach { mass, expectedFuel in
     let fuel = fuelRequired(forMass: mass)
     if fuel == expectedFuel {
-        print("Passed")
+        print("Passed: test case \(mass) -> \(expectedFuel)")
     } else {
         print("Error: expected \(expectedFuel) for mass \(mass), got \(fuel)")
     }
 }
 
-let totalFuelPart1 = input.reduce(0) { fuelAccumulator, moduleMass in
+let totalFuelPart1 = challengeInput.reduce(0) { fuelAccumulator, moduleMass in
     fuelAccumulator + fuelRequired(forMass: moduleMass)
 }
-print(totalFuelPart1)
+let expectedTotalFuelPart1 = 3490763
+print("Solution day 1 part 1: \(totalFuelPart1) -> \(totalFuelPart1 == expectedTotalFuelPart1 ? "correct" : "wrong")")
 
 """
 --- Part Two ---
@@ -73,6 +77,8 @@ At first, a module of mass 1969 requires 654 fuel. Then, this fuel requires 216 
 The fuel required by a module of mass 100756 and its fuel is: 33583 + 11192 + 3728 + 1240 + 411 + 135 + 43 + 12 + 2 = 50346.
 What is the sum of the fuel requirements for all of the modules on your spacecraft when also taking into account the mass of the added fuel? (Calculate the fuel requirements for each module separately, then add them all up at the end.)
 """
+
+print("\nPart 2\n")
 
 let testCasesPart2 = [
     14: 2,
@@ -98,15 +104,16 @@ func fuelRequired(forFuel fuel: Int) -> Int {
 testCasesPart2.forEach { mass, expectedFuel in
     let fuel = fuelRequired(forFuel: fuelRequired(forMass: mass))
     if fuel == expectedFuel {
-        print("Passed")
+        print("Passed: test case \(mass) -> \(expectedFuel)")
     } else {
         print("Error: expected \(expectedFuel) for mass \(mass), got \(fuel)")
     }
 }
 
-let totalFuelPart2 = input.reduce(0) { fuelAccumulator, moduleMass in
+let totalFuelPart2 = challengeInput.reduce(0) { fuelAccumulator, moduleMass in
     fuelAccumulator + fuelRequired(forFuel: fuelRequired(forMass: moduleMass))
 }
-print(totalFuelPart2)
+let expectedTotalFuelPart2 = 5233250
+print("Solution day 1 part 2: \(totalFuelPart2) -> \(totalFuelPart2 == expectedTotalFuelPart2 ? "correct" : "wrong")")
 
 //: [Next](@next)
