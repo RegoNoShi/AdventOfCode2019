@@ -19,51 +19,55 @@ let challengeInput = fileContent
 
 print("Part 1\n")
 
+func solvePart1(_ input: [Int]) -> Int {
+    return input[0]
+}
+
 let testCasesPart1 = [
     [1]: 1
 ]
 
-func solve(_ input: [Int]) -> Int {
-    return input[0]
-}
-
 testCasesPart1.forEach { input, expectedOutput in
-    let output = solve(input)
+    let output = solvePart1(input)
     if output == expectedOutput {
         print("Passed: test case \(input) -> \(expectedOutput)")
     } else {
-        print("Error: expected \(expectedOutput) for program \(input), got \(output)")
+        print("Error: expected \(expectedOutput) for input \(input), got \(output)")
     }
 }
 
-let outputPart1 = solve(challengeInput)
+let startPart1 = Date()
+let outputPart1 = solvePart1(challengeInput)
 let expectedOutputPart1 = 42
 print("Solution: \(outputPart1) -> \(outputPart1 == expectedOutputPart1 ? "correct" : "wrong")")
+print("Time elapsed: \(startPart1.distance(to: Date()))")
 
 """
 """
 
 print("\nPart 2\n")
 
+func solvePart2(_ input: [Int]) -> Int {
+    return input[0]
+}
+
 let testCasesPart2 = [
     [1]: 1
 ]
 
-func solve2(_ input: [Int]) -> Int {
-    return input[0]
-}
-
 testCasesPart2.forEach { input, expectedOutput in
-    let output = solve2(input)
+    let output = solvePart2(input)
     if output == expectedOutput {
         print("Passed: test case \(input) -> \(expectedOutput)")
     } else {
-        print("Error: expected \(expectedOutput) for program \(input), got \(output)")
+        print("Error: expected \(expectedOutput) for input \(input), got \(output)")
     }
 }
 
-let outputPart2 = solve2(challengeInput)
+let startPart2 = Date()
+let outputPart2 = solvePart2(challengeInput)
 let expectedOutputPart2 = 42
 print("Solution: \(outputPart2) -> \(outputPart2 == expectedOutputPart2 ? "correct" : "wrong")")
+print("Time elapsed: \(startPart2.distance(to: Date()))")
 
 //: [Next](@next)
