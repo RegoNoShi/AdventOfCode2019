@@ -64,10 +64,10 @@ struct Point: Hashable {
     let x, y: Int
 
     static let origin = Point(x: 0, y: 0)
-}
 
-func manhattanDistance(p1: Point, p2: Point) -> Int {
-    max(p1.x, p2.x) - min(p1.x, p2.x) + max(p1.y, p2.y) - min(p1.y, p2.y)
+    func manhattanDistance(from point: Point) -> Int {
+        max(x, point.x) - min(x, point.x) + max(y, point.y) - min(y, point.y)
+    }
 }
 
 extension String {
@@ -104,45 +104,23 @@ extension Int {
     }
 }
 
-enum ManhattanSegment: Hashable {
-    case vertical(x: Int, ys: [Int])
-    case horizontal(y: Int, xs: [Int])
+struct ManhattanSegment: Hashable {
+    let start, end: Point
 
     init?(start: Point, end: Point) {
-        if start.x == end.x {
-            self = .vertical(x: start.x, ys: start.y.range(to: end.y))
-        } else if start.y == end.y {
-            self = .horizontal(y: start.y, xs: start.x.range(to: end.x))
-        } else {
-            return nil
-        }
+        guard start.x == end.x || start.y == end.y else { return nil }
+        self.start = start
+        self.end = end
     }
 
-    var start: Point {
-        switch self {
-        case .horizontal(let y, let xs):
-            return Point(x: xs[0], y: y)
-        case .vertical(let x, let ys):
-            return Point(x: x, y: ys[0])
-        }
-    }
-
-    var end: Point {
-        switch self {
-        case .horizontal(let y, let xs):
-            return Point(x: xs.last!, y: y)
-        case .vertical(let x, let ys):
-            return Point(x: x, y: ys.last!)
-        }
+    private var isVertical: Bool {
+        start.x == end.x
     }
 
     var points: [Point] {
-        switch self {
-        case .horizontal(let y, let xs):
-            return xs.map { x in Point(x: x, y: y) }
-        case .vertical(let x, let ys):
-            return ys.map { y in Point(x: x, y: y) }
-        }
+        isVertical ?
+            start.y.range(to: end.y).map { y in Point(x: start.x, y: y) } :
+            start.x.range(to: end.x).map { x in Point(x: x, y: start.y) }
     }
 
     func intersectionsWithSegment(_ segment: ManhattanSegment) -> Set<Point>? {
@@ -153,20 +131,17 @@ enum ManhattanSegment: Hashable {
             return nil
         }
 
-        switch self {
-        case .horizontal(let y, _):
-            switch segment {
-            case .horizontal(let y2, _):
-                return y == y2 ? Set(points).intersection(segment.points) : nil
-            case .vertical(let x2, _):
-                return Set([Point(x: x2, y: y)])
+        if isVertical {
+            if segment.isVertical {
+                return start.x == segment.start.x ? Set(points).intersection(segment.points) : nil
+            } else {
+                return Set([Point(x: start.x, y: segment.start.y)])
             }
-        case .vertical(let x, _):
-            switch segment {
-            case .horizontal(let y2, _):
-                return Set([Point(x: x, y: y2)])
-            case .vertical(let x2, _):
-                return x == x2 ? Set(points).intersection(segment.points) : nil
+        } else {
+            if segment.isVertical {
+                return Set([Point(x: segment.start.x, y: start.y)])
+            } else {
+                return start.y == segment.start.y ? Set(points).intersection(segment.points) : nil
             }
         }
     }
@@ -219,7 +194,7 @@ func minDistanceFromOriginToIntersection(_ wires: [String]) -> Int {
         segmentsWire2.forEach { segment2 in
             segment1.intersectionsWithSegment(segment2)?.forEach { intersection in
                 if intersection != Point.origin || segment2.start != Point.origin {
-                    let distance = manhattanDistance(p1: Point.origin, p2: intersection)
+                    let distance = Point.origin.manhattanDistance(from: intersection)
                     if distance < minDistance {
                         minDistance = distance
                     }
@@ -287,12 +262,7 @@ print("\nPart 2\n")
 
 extension ManhattanSegment {
     var length: Int {
-        switch self {
-        case .horizontal(_, let xs):
-            return xs.count - 1
-        case .vertical(_, let ys):
-            return ys.count - 1
-        }
+        start.manhattanDistance(from: end)
     }
 
     func intersectsWith(_ point: Point) -> Bool {
