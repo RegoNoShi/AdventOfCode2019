@@ -1,18 +1,3 @@
-//: [Previous](@previous)
-
-import Foundation
-
-print("Day N\n")
-
-"""
-"""
-
-guard let filePath = Bundle.main.path(forResource:"input", ofType: "txt"),
-      let fileData = FileManager.default.contents(atPath: filePath),
-      let fileContent = String(data: fileData, encoding:String.Encoding.utf8) else {
-    fatalError("Unable to load input file")
-}
-
 import Foundation
 
 let inputFile = loadInputFile()
