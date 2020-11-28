@@ -8,6 +8,7 @@ _ = """
 """
 
 let challengeInput = inputFile
+    .trimmingCharacters(in: .whitespacesAndNewlines)
     .components(separatedBy: ",")
     .compactMap { Int($0) }
 
