@@ -26,6 +26,12 @@ public extension String {
     }
 }
 
+public func measuringExecutionTime(of block: () -> Void) {
+  let start = Date()
+  block()
+  print("Time elapsed: \(String(format: "%.5f", start.distance(to: Date()))) seconds")
+}
+
 public func loadInputFile(_ fileName: String = "input.txt") -> String {
     let inputFilePath: String
 

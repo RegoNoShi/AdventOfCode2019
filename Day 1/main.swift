@@ -1,9 +1,10 @@
-
 import Foundation
+
+let inputFile = loadInputFile()
 
 print("Day 1\n")
 
-"""
+_ = """
 --- Day 1: The Tyranny of the Rocket Equation ---
 Santa has become stranded at the edge of the Solar System while delivering presents to other planets! To accurately calculate his position in space, safely align his warp drive, and return to Earth in time to save Christmas, he needs you to bring him measurements from fifty stars.
 
@@ -26,13 +27,7 @@ The Fuel Counter-Upper needs to know the total fuel requirement. To find it, ind
 What is the sum of the fuel requirements for all of the modules on your spacecraft?
 """
 
-guard let filePath = Bundle.main.path(forResource:"input", ofType: "txt"),
-      let fileData = FileManager.default.contents(atPath: filePath),
-      let fileContent = String(data: fileData, encoding:String.Encoding.utf8) else {
-    fatalError("Unable to load input file")
-}
-
-let challengeInput = fileContent
+let challengeInput = inputFile
     .components(separatedBy: "\n")
     .compactMap { Int($0) }
 
@@ -58,13 +53,15 @@ testCasesPart1.forEach { mass, expectedFuel in
     }
 }
 
-let totalFuelPart1 = challengeInput.reduce(0) { fuelAccumulator, moduleMass in
-    fuelAccumulator + fuelRequired(forMass: moduleMass)
+measuringExecutionTime {
+    let totalFuelPart1 = challengeInput.reduce(0) { fuelAccumulator, moduleMass in
+        fuelAccumulator + fuelRequired(forMass: moduleMass)
+    }
+    let expectedTotalFuelPart1 = 3490763
+    print("Solution day 1 part 1: \(totalFuelPart1) -> \(totalFuelPart1 == expectedTotalFuelPart1 ? "correct" : "wrong")")
 }
-let expectedTotalFuelPart1 = 3490763
-print("Solution day 1 part 1: \(totalFuelPart1) -> \(totalFuelPart1 == expectedTotalFuelPart1 ? "correct" : "wrong")")
 
-"""
+_ = """
 --- Part Two ---
 During the second Go / No Go poll, the Elf in charge of the Rocket Equation Double-Checker stops the launch sequence. Apparently, you forgot to include additional fuel for the fuel you just added.
 
@@ -110,10 +107,10 @@ testCasesPart2.forEach { mass, expectedFuel in
     }
 }
 
-let totalFuelPart2 = challengeInput.reduce(0) { fuelAccumulator, moduleMass in
-    fuelAccumulator + fuelRequired(forFuel: fuelRequired(forMass: moduleMass))
+measuringExecutionTime {
+    let totalFuelPart2 = challengeInput.reduce(0) { fuelAccumulator, moduleMass in
+        fuelAccumulator + fuelRequired(forFuel: fuelRequired(forMass: moduleMass))
+    }
+    let expectedTotalFuelPart2 = 5233250
+    print("Solution day 1 part 2: \(totalFuelPart2) -> \(totalFuelPart2 == expectedTotalFuelPart2 ? "correct" : "wrong")")
 }
-let expectedTotalFuelPart2 = 5233250
-print("Solution day 1 part 2: \(totalFuelPart2) -> \(totalFuelPart2 == expectedTotalFuelPart2 ? "correct" : "wrong")")
-
-//: [Next](@next)

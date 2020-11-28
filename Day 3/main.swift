@@ -1,10 +1,8 @@
-//: [Previous](@previous)
-
 import Foundation
 
-print("Day 3\n")
+let inputFile = loadInputFile()
 
-"""
+_ = """
 --- Day 3: Crossed Wires ---
 The gravity assist was successful, and you're well on your way to the Venus refuelling station. During the rush back on Earth, the fuel management system wasn't completely installed, so that's next on the priority list.
 
@@ -47,15 +45,10 @@ U98,R91,D20,R16,D67,R40,U7,R15,U6,R7 = distance 135
 What is the Manhattan distance from the central port to the closest intersection?
 """
 
-guard let filePath = Bundle.main.path(forResource:"input", ofType: "txt"),
-      let fileData = FileManager.default.contents(atPath: filePath),
-      let fileContent = String(data: fileData, encoding:String.Encoding.utf8) else {
-    fatalError("Unable to load input file")
-}
-
-let challengeInput = Array(fileContent
-    .components(separatedBy: "\n")
-    .prefix(2)
+let challengeInput = Array(
+    inputFile
+        .components(separatedBy: "\n")
+        .prefix(2)
 )
 
 print("Part 1\n")
@@ -195,13 +188,13 @@ testCasesPart1.forEach { wires, expectedDistance in
     }
 }
 
-var start = Date()
-let distancePart1 = minDistanceFromOriginToIntersection(challengeInput)
-let expectedDistancePart1 = 308
-print("Solution: \(distancePart1) -> \(distancePart1 == expectedDistancePart1 ? "correct" : "wrong")")
-print("Time elapsed: \(start.distance(to: Date()))")
+measuringExecutionTime {
+    let distancePart1 = minDistanceFromOriginToIntersection(challengeInput)
+    let expectedDistancePart1 = 308
+    print("Solution: \(distancePart1) -> \(distancePart1 == expectedDistancePart1 ? "correct" : "wrong")")
+}
 
-"""
+_ = """
 --- Part Two ---
 It turns out that this circuit is very timing-sensitive; you actually need to minimize the signal delay.
 
@@ -300,10 +293,8 @@ testCasesPart2.forEach { wires, expectedDistance in
     }
 }
 
-start = Date()
-let stepsPart2 = minStepsFromOriginToIntersection(challengeInput)
-let expectedStepsPart2 = 12934
-print("Solution: \(stepsPart2) -> \(stepsPart2 == expectedStepsPart2 ? "correct" : "wrong")")
-print("Time elapsed: \(start.distance(to: Date()))")
-
-//: [Next](@next)
+measuringExecutionTime {
+    let stepsPart2 = minStepsFromOriginToIntersection(challengeInput)
+    let expectedStepsPart2 = 12934
+    print("Solution: \(stepsPart2) -> \(stepsPart2 == expectedStepsPart2 ? "correct" : "wrong")")
+}

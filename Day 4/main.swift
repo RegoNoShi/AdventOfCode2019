@@ -1,10 +1,10 @@
-//: [Previous](@previous)
-
 import Foundation
 
-print("Day 4\n")
+let inputFile = loadInputFile()
 
-"""
+print("Day N\n")
+
+_ = """
 --- Day 4: Secure Container ---
 You arrive at the Venus fuel depot only to discover it's protected by a password. The Elves had written the password on a sticky note, but someone threw it out.
 
@@ -22,13 +22,7 @@ Other than the range rule, the following are true:
 How many different passwords within the range given in your puzzle input meet these criteria?
 """
 
-guard let filePath = Bundle.main.path(forResource:"input", ofType: "txt"),
-      let fileData = FileManager.default.contents(atPath: filePath),
-      let fileContent = String(data: fileData, encoding:String.Encoding.utf8) else {
-    fatalError("Unable to load input file")
-}
-
-let challengeInput = fileContent
+let challengeInput = inputFile
     .trimmingCharacters(in: .whitespacesAndNewlines)
     .components(separatedBy: "-")
     .compactMap { Int($0) }
@@ -82,13 +76,13 @@ func validCodesInRange(_ input: [Int]) -> Int {
     return validCodes
 }
 
-let startPart1 = Date()
-let outputPart1 = validCodesInRange(challengeInput)
-let expectedOutputPart1 = 1610
-print("Solution: \(outputPart1) -> \(outputPart1 == expectedOutputPart1 ? "correct" : "wrong")")
-print("Time elapsed: \(startPart1.distance(to: Date()))")
+measuringExecutionTime {
+    let outputPart1 = validCodesInRange(challengeInput)
+    let expectedOutputPart1 = 1610
+    print("Solution: \(outputPart1) -> \(outputPart1 == expectedOutputPart1 ? "correct" : "wrong")")
+}
 
-"""
+_ = """
 --- Part Two ---
 An Elf just remembered one more important detail: the two adjacent matching digits are not part of a larger group of matching digits.
 
@@ -158,10 +152,8 @@ func validCodesInRangePart2(_ input: [Int]) -> Int {
     return validCodes
 }
 
-let startPart2 = Date()
-let outputPart2 = validCodesInRangePart2(challengeInput)
-let expectedOutputPart2 = 1104
-print("Solution: \(outputPart2) -> \(outputPart2 == expectedOutputPart2 ? "correct" : "wrong")")
-print("Time elapsed: \(startPart2.distance(to: Date()))")
-
-//: [Next](@next)
+measuringExecutionTime {
+    let outputPart2 = validCodesInRangePart2(challengeInput)
+    let expectedOutputPart2 = 1104
+    print("Solution: \(outputPart2) -> \(outputPart2 == expectedOutputPart2 ? "correct" : "wrong")")
+}

@@ -30,11 +30,11 @@ testCasesPart1.forEach { input, expectedOutput in
     }
 }
 
-let startPart1 = Date()
-let outputPart1 = solvePart1(challengeInput)
-let expectedOutputPart1 = 42
-print("Solution: \(outputPart1) -> \(outputPart1 == expectedOutputPart1 ? "correct" : "wrong")")
-print("Time elapsed: \(startPart1.distance(to: Date()))")
+measuringExecutionTime {
+    let outputPart1 = solvePart1(challengeInput)
+    let expectedOutputPart1 = 42
+    print("Solution: \(outputPart1) -> \(outputPart1 == expectedOutputPart1 ? "correct" : "wrong")")
+}
 
 _ = """
 """
@@ -58,8 +58,8 @@ testCasesPart2.forEach { input, expectedOutput in
     }
 }
 
-let startPart2 = Date()
-let outputPart2 = solvePart2(challengeInput)
-let expectedOutputPart2 = 42
-print("Solution: \(outputPart2) -> \(outputPart2 == expectedOutputPart2 ? "correct" : "wrong")")
-print("Time elapsed: \(startPart2.distance(to: Date()))")
+measuringExecutionTime {
+    let outputPart2 = solvePart2(challengeInput)
+    let expectedOutputPart2 = 42
+    print("Solution: \(outputPart2) -> \(outputPart2 == expectedOutputPart2 ? "correct" : "wrong")")
+}

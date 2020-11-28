@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='macos' display-mode='rendered' buildActiveScheme='true'>
-    <pages>
-        <page name='Day1'/>
-        <page name='Day2'/>
-        <page name='Day3'/>
-        <page name='DayN'/>
-        <page name='Day4'/>
-    </pages>
+<playground version='5.0' target-platform='macos' buildActiveScheme='true'>
+    <timeline fileName='timeline.xctimeline'/>
 </playground>
