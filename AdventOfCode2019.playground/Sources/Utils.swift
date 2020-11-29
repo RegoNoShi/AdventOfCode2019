@@ -54,3 +54,21 @@ public func loadInputFile(_ fileName: String = "input.txt") -> String {
 
     return inputFile
 }
+
+// Permutations https://www.objc.io/blog/2014/12/08/functional-snippet-10-permutations/
+public extension Array {
+    func chopped() -> (Element, [Element])? {
+        guard let x = first else { return nil }
+        return (x, Array(suffix(from: 1)))
+    }
+
+    func interleaving(_ element: Element) -> [[Element]] {
+        guard let (head, rest) = chopped() else { return [[element]] }
+        return [[element] + self] + rest.interleaving(element).map { [head] + $0 }
+    }
+
+    var permutations: [[Element]] {
+        guard let (head, rest) = chopped() else { return [[]] }
+        return rest.permutations.flatMap { $0.interleaving(head) }
+    }
+}
