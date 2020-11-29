@@ -21,4 +21,4 @@ PS: on Playground the execution time is much higher. Comparison:
 
 - Day 4/part 1 -> 35 seconds on Playground, 0.5 seconds from terminal
 - Day 4/part 2 -> 55 seconds on Playground, 1 second from terminal
-- Day 9/part 2 -> Xcode crashed, ~1 second from terminal
+- Day 9/part 2 -> crashed on Playground, ~1 second from terminal
